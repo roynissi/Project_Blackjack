@@ -30,7 +30,7 @@ public class Main {
 
     public void showGameScreen(Scanner input) {
         // Game Screen Layout to be replaced with logic
-        System.out.println("Dealer's Hand: [??] [7♠]");
+        System.out.println("Dealer's Hand: [?] [7♠]");
         System.out.println("-------------------------------");
         System.out.println("Your Hand: [10♦] [6♥] (Total: 16)");
         System.out.println("(H) Hit    (S) Stand");
