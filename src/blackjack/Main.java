@@ -69,7 +69,7 @@ public class Main {
 
         // Game Restart
         System.out.print("Play again? (Y/N): ");
-        String replayChoice = scanner.nextLine().trim().toUpperCase();
+       // String replayChoice = scanner.nextLine().trim().toUpperCase();
 
 
 
