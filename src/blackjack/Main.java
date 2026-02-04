@@ -36,7 +36,27 @@ public class Main {
 
         System.out.println("(H) Hit    (S) Stand");
 
+        boolean isPlaying = true;
 
+        while (isPlaying) {
+            System.out.print("Choose an action (H/S)");
+            String choice = scanner.nextLine().trim().toUpperCase();
+
+            if (choice.equals("H")) {
+                System.out.println("You chose to HIT.");
+                // deal card logic
+            }
+            else if (choice.equals("S")) {
+                System.out.println("You chose to STAND");
+                isPlaying = false;
+            }
+            else {
+                System.out.println("Invalid input. Please enter H or S.");
+            }
+
+            System.out.println();
+
+        }
 
 
     }
