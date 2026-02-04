@@ -58,6 +58,21 @@ public class Main {
 
         }
 
+        // End Screen
+
+        System.out.println("================================");
+        System.out.println("            GAME OVER           ");
+        System.out.println("================================");
+        System.out.println();
+        System.out.println("Result: You Win!");
+        System.out.println();
+
+        // Game Restart
+        System.out.print("Play again? (Y/N): ");
+        String replayChoice = scanner.nextLine().trim().toUpperCase();
+
+
+
 
 
 
