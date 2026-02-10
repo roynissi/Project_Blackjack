@@ -1,5 +1,6 @@
 package blackjack.GameController;
 /*deck, player and dealer classes will be imported here */
+import blackjack.Deck;
 public class GameController{
 
     private Deck deck;
