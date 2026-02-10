@@ -1,4 +1,7 @@
 package blackjack.GameController;
+
+import java.util.Scanner;
+
 /*deck, player and dealer classes will be imported here */
 import blackjack.Deck;
 public class GameController{
@@ -41,8 +44,8 @@ public class GameController{
      * Handles the player's turn.
      * Player may hit until they stand or bust.
      */
-    public void playerTurn() {
-        while (!roundOver && player.wantsToHit()) {
+    public void playerTurn(Scanner Scanner) {
+        while (!roundOver && player.wantsToHit(Scanner)) {
             player.addCard(deck.dealCard());
 
             if (player.getHand().isBust()) {
