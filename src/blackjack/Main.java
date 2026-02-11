@@ -2,15 +2,26 @@ package blackjack;
 
 import java.util.Scanner;
 
+import blackjack.GameController.GameController;
+import blackjack.GameController.GameResult;
+import blackjack.GameController.Deck;
+import blackjack.GameController.Player;
+import blackjack.GameController.Dealer;
 
 public class Main {
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Main game = new Main();
 
-        game.showTitleScreen(scanner);
-        game.showGameScreen(scanner);
-        game.showEndScreen(scanner);
+        boolean playAgain = true;
+
+    
+        while (playAgain) {
+            game.showTitleScreen(scanner);
+            game.showGameScreen(scanner);
+            playAgain = game.showEndScreen(scanner);
+        }
 
         scanner.close();
     }
@@ -21,53 +32,75 @@ public class Main {
         System.out.println("================================");
         System.out.println("\n        Press ENTER to Play     \n");
 
-        // 'input' parameter we passed in
         input.nextLine();
 
         System.out.println("        Shuffling Cards....     \n");
-
     }
 
     public void showGameScreen(Scanner input) {
-        // Game Screen Layout to be replaced with logic
-        System.out.println("Dealer's Hand: [??] [7♠]");
-        System.out.println("-------------------------------");
-        System.out.println("Your Hand: [10♦] [6♥] (Total: 16)");
-        System.out.println("(H) Hit    (S) Stand");
 
-        boolean isPlaying = true;
+        
+        Deck deck = new Deck();
+        Player player = new Player();
+        Dealer dealer = new Dealer();
 
-        while (isPlaying) {
-            System.out.print("Choose an action (H/S)");
+        GameController controller =
+                new GameController(player, dealer, deck);
+
+        controller.startGame();
+
+
+        while (!controller.isRoundOver()) {
+
+            System.out.println("Dealer's Hand: "
+                    + dealer.getHand().toStringHidden());
+            System.out.println("-------------------------------");
+            System.out.println("Your Hand: " + player.getHand());
+            System.out.println("Total: " + player.getHand().getValue());
+
+            System.out.print("(H) Hit    (S) Stand: ");
             String choice = input.nextLine().trim().toUpperCase();
 
             if (choice.equals("H")) {
-                System.out.println("You chose to HIT.");
-                // deal card logic
+                
+                controller.playerTurn();
+
             } else if (choice.equals("S")) {
-                System.out.println("You chose to STAND");
-                isPlaying = false;
+                controller.dealerTurn();
+                break;
+
             } else {
                 System.out.println("Invalid input. Please enter H or S.");
             }
+        }
 
-            System.out.println();
+        
+        System.out.println("\n--- FINAL HANDS ---");
+        System.out.println("Dealer: " + dealer.getHand()
+                + " (" + dealer.getHand().getValue() + ")");
+        System.out.println("Player: " + player.getHand()
+                + " (" + player.getHand().getValue() + ")");
 
+        GameResult result = controller.checkWinner();
+
+        switch (result) {
+            case PLAYER_WINS -> System.out.println("🎉 You win!");
+            case DEALER_WINS -> System.out.println("💀 Dealer wins!");
+            case PLAYER_BLACKJACK -> System.out.println("🃏 BLACKJACK!");
+            case PUSH -> System.out.println("🤝 Push (Tie)");
         }
     }
 
-    public void showEndScreen(Scanner input) {
-
-        // End Screen
+    
+    public boolean showEndScreen(Scanner input) {
 
         System.out.println("================================");
         System.out.println("            GAME OVER           ");
         System.out.println("================================");
         System.out.print("Play again? (Y/N): ");
 
-        // Game Restart
         String replayChoice = input.nextLine().trim().toUpperCase();
-        System.out.println("You chose: " + replayChoice);
 
+        return replayChoice.equals("Y");
     }
 }
