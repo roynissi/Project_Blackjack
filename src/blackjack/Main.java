@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 import blackjack.GameController.GameController;
 import blackjack.GameController.GameResult;
+import blackjack.GameController.Deck;
+import blackjack.GameController.Player;
+import blackjack.GameController.Dealer;
 
 public class Main {
 
@@ -60,7 +63,7 @@ public class Main {
 
             if (choice.equals("H")) {
                 
-                controller.playerTurn();
+                controller.playerTurn(input);
 
             } else if (choice.equals("S")) {
                 controller.dealerTurn();

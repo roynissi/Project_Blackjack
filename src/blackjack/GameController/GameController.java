@@ -3,13 +3,19 @@ package blackjack.GameController;
 import java.util.Scanner;
 
 /*deck, player and dealer classes will be imported here */
-import blackjack.Deck;
+import blackjack.GameController.Deck;
+
 public class GameController{
 
     private Deck deck;
     private Player player;
     private Dealer dealer;
     private boolean roundOver;
+	
+	// Add the public function that was missing... 
+	public boolean isRoundOver() {
+		return this.roundOver;
+	}
 
     public GameController(Player player, Dealer dealer, Deck deck) {
         this.player = player;

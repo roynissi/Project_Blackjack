@@ -2,6 +2,10 @@ package blackjack.GameController;
 
 
 import java.util.Scanner;
+import blackjack.GameController.Hand;
+import java.util.ArrayList;
+import java.util.Collections;
+import blackjack.GameController.Card;
 
 public class Player {
     protected final Hand hand = new Hand(); // Create a Hand from Deck.java
@@ -37,19 +41,4 @@ public class Player {
     }
 }
 }
-class Dealer extends Player {
 
-    // Dealer's logic for hitting
-    @Override
-    public boolean wantsToHit(Scanner scanner) {
-        int handValue = hand.getValue();
-        // Dealer hits if hand value is less than 17
-        if (handValue < 17) {
-            System.out.println("Dealer hits (hand value: " + handValue + ")");
-            return true;
-        } else {
-            System.out.println("Dealer stands (hand value: " + handValue + ")");
-            return false;
-        }
-    }
-}
