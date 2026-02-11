@@ -53,4 +53,16 @@ public class Hand {
 		return result;
 
 	}
+
+    // Implement our own to String function that works properly...
+    @Override
+    public String toString() {
+        if (cards.isEmpty()) return "Empty Hand"; // obvious
+        String result = cards.get(0).toString();
+        for (int i = 1; i < cards.size(); i++) { 
+        result += ", " + cards.get(i).toString();
+    }
+    return result;
+    }
+
 }

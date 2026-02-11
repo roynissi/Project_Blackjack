@@ -63,7 +63,7 @@ public class Main {
 
             if (choice.equals("H")) {
                 
-                controller.playerTurn(input);
+                controller.playerTurn();
 
             } else if (choice.equals("S")) {
                 controller.dealerTurn();

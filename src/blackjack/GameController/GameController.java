@@ -46,23 +46,19 @@ public class GameController{
         }
     }
 
-    /*
-     * Handles the player's turn.
-     * Player may hit until they stand or bust.
-     */
-    public void playerTurn(Scanner Scanner) {
-        while (!roundOver && player.wantsToHit(Scanner)) {
-            player.addCard(deck.dealCard());
-
-            if (player.getHand().isBust()) {
-                roundOver = true;
-            }
+    // handle players turn: Check if round is over, if not, add a card, then check if they went bust from that added card.
+    public void playerTurn() {
+        if (roundOver) return;
+        player.addCard(deck.dealCard());
+        if(player.getHand().isBust()){
+            roundOver = true;
         }
     }
 
+
     /*
      * Handles the dealer's turn.
-     * Dealer must hit until hand value is at least 17, following casino rules.
+     * Dealer must hit until hand value is at least 17
      */
     public void dealerTurn() {
         if (roundOver) return;
