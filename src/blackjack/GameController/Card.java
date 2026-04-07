@@ -4,7 +4,9 @@ public class Card {
     private final int rank; // 1(Ace), 2-10, 11(J), 12(Q), 13(K)
     private final String suit;
 
-    Card(int rank, String suit) {
+    public Card(int rank, String suit) {
+        if (rank > 13)
+            throw new IllegalArgumentException("Invalid rank value");
         this.rank = rank;
         this.suit = suit;
     }
@@ -31,7 +33,7 @@ public class Card {
         else if (rank == 12) face = "Q";
         else if (rank == 13) face = "K";
         else face = String.valueOf(rank); // If not a letter card the String is the number
-        return face + suit; // Returns the now set Face, and the already set suit (clubs, hearts, etc. as ♣, and ♥) 
+        return face + " " + suit; // Returns the now set Face, and the already set suit (clubs, hearts, etc. as ♣, and ♥)
     }
 }
 

@@ -2,6 +2,7 @@ package blackjack.GameController;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 // After creating a Deck Variable, we should Reset and Shuffle a Deck before using it.
 // like `Deck main_deck = new Deck;` -- then `main_deck.reset()` then `main_deck.shuffle()`
@@ -13,6 +14,10 @@ public class Deck {
         shuffle();
     }
 
+    public List<Card> getCards() {
+        return cards;
+    }
+
     public void shuffle() {
         Collections.shuffle(cards);
     }
@@ -22,7 +27,7 @@ public class Deck {
             reset();
             shuffle();
         }
-        return cards.remove(cards.size() - 1);
+        return cards.removeLast();
     }
 
     private void reset() {

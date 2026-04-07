@@ -1,6 +1,8 @@
 package blackjack.GameController;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+
 import blackjack.GameController.Card;
 
 
@@ -59,6 +61,10 @@ public class Hand {
      */
     public int getSize() {
         return cards.size();
+    }
+
+    public List<Card> getCards() {
+        return cards;
     }
 
     // Implement our own to String function that works properly...
