@@ -45,12 +45,12 @@ public class Hand {
 		if (cards.size() == 1) return "🃏" ; // If there is only one card, don't show it. This is intended to mean the back of a card, that you can't see.
 
 		// If > 1 cards:
-		String result = "🃏, " + cards.get(1).toString();  // Shows the 0th card as hidden and the value of the 1st card
+		StringBuilder result = new StringBuilder("🃏, " + cards.get(1).toString());  // Shows the 0th card as hidden and the value of the 1st card
 
 		for (int i = 2; i < cards.size(); i++) { // Iterate through the all cards in the hand but the first
-			result += ", " + cards.get(i).toString(); // Add the string value for each card
+			result.append(", ").append(cards.get(i).toString()); // Add the string value for each card
 		}
-		return result;
+		return result.toString();
 
 	}
 
@@ -58,11 +58,11 @@ public class Hand {
     @Override
     public String toString() {
         if (cards.isEmpty()) return "Empty Hand"; // obvious
-        String result = cards.get(0).toString();
+        StringBuilder result = new StringBuilder(cards.get(0).toString());
         for (int i = 1; i < cards.size(); i++) { 
-        result += ", " + cards.get(i).toString();
+        result.append(", ").append(cards.get(i).toString());
     }
-    return result;
+    return result.toString();
     }
 
 }

@@ -1,6 +1,6 @@
 package blackjack.GameController;
 
-class Card {
+public class Card {
     private final int rank; // 1(Ace), 2-10, 11(J), 12(Q), 13(K)
     private final String suit;
 
@@ -15,8 +15,8 @@ class Card {
 
     int getBaseValue() {
         if (rank == 1) return 11; // Ace value = 11
-        if (rank >= 10) return 10; // 10, J, Q, and K have a value of 10
-        return rank; // Numbers 2-9's value is the same as there rank.
+        return Math.min(rank, 10); // 10, J, Q, and K have a value of 10
+        // Numbers 2-9's value is the same as there rank.
     }
 
     boolean isAce() { // Returns true if the Rank is 1 (rank will be one if it is an Ace)
