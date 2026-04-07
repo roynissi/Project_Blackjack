@@ -54,6 +54,13 @@ public class Hand {
 
 	}
 
+    /**
+     * @return the size of the hand
+     */
+    public int getSize() {
+        return cards.size();
+    }
+
     // Implement our own to String function that works properly...
     @Override
     public String toString() {
