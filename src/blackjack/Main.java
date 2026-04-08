@@ -13,13 +13,17 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Main game = new Main();
+        Deck deck = new Deck();
+        Player player = new Player();
+        Dealer dealer = new Dealer();
+        GameController controller = new GameController(player, dealer, deck);
 
         boolean playAgain = true;
 
     
         while (playAgain) {
             game.showTitleScreen(scanner);
-            game.showGameScreen(scanner);
+            game.showGameScreen(scanner, controller, player, dealer);
             playAgain = game.showEndScreen(scanner);
         }
 
@@ -37,16 +41,8 @@ public class Main {
         System.out.println("        Shuffling Cards....     \n");
     }
 
-    public void showGameScreen(Scanner input) {
-
-        
-        Deck deck = new Deck();
-        Player player = new Player();
-        Dealer dealer = new Dealer();
-
-        GameController controller =
-                new GameController(player, dealer, deck);
-
+    public void showGameScreen(Scanner input, GameController controller,
+                               Player player, Dealer dealer) {
         controller.startGame();
 
 
@@ -58,19 +54,12 @@ public class Main {
             System.out.println("Your Hand: " + player.getHand());
             System.out.println("Total: " + player.getHand().getValue());
 
-            System.out.print("(H) Hit    (S) Stand: ");
-            String choice = input.nextLine().trim().toUpperCase();
-
-            if (choice.equals("H")) {
-                
+            if (player.wantsToHit(input)) {
                 controller.playerTurn();
-
-            } else if (choice.equals("S")) {
+            } else {
+                System.out.println("Dealer's Hand: " + dealer.getHand());
                 controller.dealerTurn();
                 break;
-
-            } else {
-                System.out.println("Invalid input. Please enter H or S.");
             }
         }
 
@@ -82,13 +71,7 @@ public class Main {
                 + " (" + player.getHand().getValue() + ")");
 
         GameResult result = controller.checkWinner();
-
-        switch (result) {
-            case PLAYER_WINS -> System.out.println("🎉 You win!");
-            case DEALER_WINS -> System.out.println("💀 Dealer wins!");
-            case PLAYER_BLACKJACK -> System.out.println("🃏 BLACKJACK!");
-            case PUSH -> System.out.println("🤝 Push (Tie)");
-        }
+        System.out.println(result.getMessage());
     }
 
     

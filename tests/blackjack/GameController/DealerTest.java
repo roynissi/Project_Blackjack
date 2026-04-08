@@ -1,55 +1,49 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
- */
 package blackjack.GameController;
 
-import java.util.Scanner;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-/**
- *
- * @author kelly
- */
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 public class DealerTest {
-    
-    public DealerTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
+
+    @Test
+    public void testDealerHitsBelowSeventeen() {
+        var dealer = new Dealer();
+        dealer.addCard(new Card(10, "Spade"));
+        dealer.addCard(new Card(6, "Heart"));
+
+        assertTrue(dealer.wantsToHit(null));
     }
 
-    /**
-     * Test of wantsToHit method, of class Dealer.
-     */
     @Test
-    public void testWantsToHit() {
-        System.out.println("wantsToHit");
-        Scanner scanner = null;
-        Dealer instance = new Dealer();
-        boolean expResult = false;
-        boolean result = instance.wantsToHit(scanner);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testDealerStandsOnSeventeen() {
+        var dealer = new Dealer();
+        dealer.addCard(new Card(10, "Spade"));
+        dealer.addCard(new Card(7, "Heart"));
+
+        assertFalse(dealer.wantsToHit(null));
     }
-    
+
+    @Test
+    public void testDealerDrawsToSeventeen() {
+        var player = new Player();
+        var dealer = new Dealer();
+        var deck = new ScriptedDeck(
+                new Card(9, "Spade"),
+                new Card(10, "Heart"),
+                new Card(7, "Club"),
+                new Card(6, "Diamond"),
+                new Card(2, "Spade")
+        );
+        var controller = new GameController(player, dealer, deck);
+
+        controller.startGame();
+        controller.dealerTurn();
+
+        assertEquals(3, dealer.getHandSize());
+        assertEquals(18, dealer.getHand().getValue());
+        assertTrue(controller.isRoundOver());
+    }
 }

@@ -30,7 +30,7 @@ public class Deck {
         return cards.removeLast();
     }
 
-    private void reset() {
+    public void reset() {
         cards.clear(); // Clears The cards ArrayList.
         String[] suits = {"♠", "♥", "♦", "♣"};
         for (String suit : suits) { // For each Suit in the list suits
@@ -40,5 +40,4 @@ public class Deck {
         }
     }
 }
-
 
