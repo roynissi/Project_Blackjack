@@ -1,103 +1,86 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
- */
 package blackjack.GameController;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-/**
- *
- * @author anm
- */
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 public class GameControllerTest {
-
+    private Player player;
+    private Dealer dealer;
+    private Deck deck;
     private GameController instance;
-
-    public GameControllerTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
 
     @Before
     public void setUp() {
-        Player player = new Player();
-        Dealer dealer = new Dealer();
-        Deck deck = new Deck();
+        player = new Player();
+        dealer = new Dealer();
+        deck = new Deck();
         instance = new GameController(player, dealer, deck);
     }
 
-    @After
-    public void tearDown() {
-    }
-
-    /**
-     * Test of isRoundOver method, of class GameController.
-     */
-    @Test
-    public void testIsRoundOver() {
-        instance.startGame();
-        boolean result = instance.isRoundOver();
-        assertFalse(result);
-    }
-
-    /**
-     * Test of startGame method, of class GameController.
-     */
     @Test
     public void testStartGame() {
-        assertNotNull(instance);
-        instance.startGame();
-    }
+        deck = new ScriptedDeck(
+                new Card(10, "Spade"),
+                new Card(9, "Heart"),
+                new Card(8, "Club"),
+                new Card(7, "Diamond")
+        );
+        instance = new GameController(player, dealer, deck);
 
-    /**
-     * Test of playerTurn method, of class GameController.
-     * playerTurn should execute without throwing an exception.
-     */
-    @Test
-    public void testPlayerTurn() {
         instance.startGame();
-        instance.playerTurn();
-    }
 
-    /**
-     * Test of dealerTurn method, of class GameController.
-     */
-    @Test
-    public void testDealerTurn() {
-        instance.startGame();
-        instance.dealerTurn();
-    }
-
-    /**
-     * Test of checkWinner method, of class GameController.
-     */
-    @Test
-    public void testCheckWinner() {
-        instance.startGame();
-        GameResult result = instance.checkWinner();
-        assertNotNull(result);
-    }
-
-    /**
-     * Test of resetRound method, of class GameController.
-     */
-    @Test
-    public void testResetRound() {
-        instance.startGame();
-        instance.resetRound();
+        assertEquals(2, player.getHandSize());
+        assertEquals(2, dealer.getHandSize());
+        assertEquals(48, deck.getCards().size());
         assertFalse(instance.isRoundOver());
     }
 
+    @Test
+    public void testPlayerBlackjack() {
+        deck = new ScriptedDeck(
+                new Card(1, "Spade"),
+                new Card(9, "Heart"),
+                new Card(13, "Club"),
+                new Card(7, "Diamond")
+        );
+        instance = new GameController(player, dealer, deck);
+
+        instance.startGame();
+
+        assertTrue(instance.isRoundOver());
+        assertEquals(GameResult.PLAYER_BLACKJACK, instance.checkWinner());
+    }
+
+    @Test
+    public void testPlayerBust() {
+        deck = new ScriptedDeck(
+                new Card(10, "Spade"),
+                new Card(9, "Heart"),
+                new Card(8, "Club"),
+                new Card(7, "Diamond"),
+                new Card(5, "Spade")
+        );
+        instance = new GameController(player, dealer, deck);
+
+        instance.startGame();
+        instance.playerTurn();
+
+        assertTrue(player.getHand().isBust());
+        assertTrue(instance.isRoundOver());
+        assertEquals(GameResult.DEALER_WINS, instance.checkWinner());
+    }
+
+    @Test
+    public void testCheckWinner() {
+        player.addCard(new Card(10, "Spade"));
+        player.addCard(new Card(9, "Heart"));
+        dealer.addCard(new Card(10, "Club"));
+        dealer.addCard(new Card(7, "Diamond"));
+
+        assertEquals(GameResult.PLAYER_WINS, instance.checkWinner());
+    }
 }

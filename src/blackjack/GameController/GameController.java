@@ -1,10 +1,5 @@
 package blackjack.GameController;
 
-import java.util.Scanner;
-
-/*deck, player and dealer classes will be imported here */
-import blackjack.GameController.Deck;
-
 public class GameController{
 
     private Deck deck;
@@ -32,6 +27,7 @@ public class GameController{
      */
     public void startGame() {
         resetRound();
+        deck.reset();
         deck.shuffle();
 
         // Initial deal (2 cards each)
@@ -63,13 +59,15 @@ public class GameController{
     public void dealerTurn() {
         if (roundOver) return;
 
-        while (dealer.getHand().getValue() < 17) {
+        while (dealer.wantsToHit(null)) {
             dealer.addCard(deck.dealCard());
+            if (dealer.getHand().isBust()) {
+                roundOver = true;
+                return;
+            }
         }
 
-        if (dealer.getHand().isBust()) {
-            roundOver = true;
-        }
+        roundOver = true;
     }
 
     /*
@@ -116,4 +114,3 @@ public class GameController{
         roundOver = false;
     }
 }
-

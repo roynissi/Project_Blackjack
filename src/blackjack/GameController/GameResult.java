@@ -6,9 +6,9 @@ package blackjack.GameController;
  */
 public enum GameResult {
 
-    PLAYER_WINS("You win! 🎉"),
-    DEALER_WINS("Dealer wins. Better luck next time."),
-    PLAYER_BLACKJACK("BLACKJACK! You win instantly! 🃏🔥"),
+    PLAYER_WINS("You win!"),
+    DEALER_WINS("Dealer wins."),
+    PLAYER_BLACKJACK("BLACKJACK! You win instantly!"),
     PUSH("Push! It's a tie.");
 
     private final String message;
